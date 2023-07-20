@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+<body>
+<form action="/form/submit" method="post">
+  <div style="padding: 10px; padding-bottom: 0px" class="identity-class">
+    <div>
+      <h2>Rechnung stellen</h2>
+      <p>
+        Hier erstellst du eine Abschluss- oder auch Zwischenrechnung für ein
+        Projekts. Generiere eine Rechnung an deine Kunden, die sich
+        automatisch aus den verbuchten Projektleistungen (Eigen- wie
+        Fremdleistungen), den hinterlegten Zahlungskonditionen
+        (Rabattklassen, Einzel- oder Sammelrechnung u.ä.) der Kund*in, den
+        bereits erbrachten Zahlungen (Vorauszahlung, Zwischenrechnungen
+        usw.) und den ggf. getroffenen Sondervereinbarungen zusammensetzt.
+      </p>
+    </div>
+  </div>
+  <div style="font-weight: bold; padding: 10px" class="output-class">
+    <div style="" class="class-class">
+      <div>
+        <h3
+                style="font-weight: bold; width: 50vw"
+                class="designation-class"
+        >
+          Rechnung
+        </h3>
+        <div
+                style="border: 1px solid #ccc; padding: 5px"
+                class="item-class"
+        >
+          <div style="display: flex; flex-direction: row">
+            <label
+                    style="font-weight: bold; width: 50vw"
+                    class="designation-class"
+            >Rechnung Nr.</label
+            ><input
+                  type="text"
+                  style="width: 50vw"
+                  class="item-input-class"
+                  required="true"
+                  value="RE 2023undefined"
+          />
+          </div>
+          <div style="display: flex; flex-direction: row">
+            <label
+                    style="font-weight: bold; width: 50vw"
+                    class="designation-class"
+            >Rechnungsdatum</label
+            ><input
+                  type="text"
+                  style="width: 50vw"
+                  class="item-input-class"
+          />
+          </div>
+        </div>
+        <div style="margin-bottom: 20px" class="list-class">
+          <div>
+            <h3
+                    style="font-weight: bold; width: 50vw"
+                    class="designation-class"
+            >
+              Projektstunden
+            </h3>
+            <div
+                    style="border: 1px solid #ccc; padding: 5px"
+                    class="item-class"
+            >
+              <div style="display: flex; flex-direction: row">
+                <label
+                        style="font-weight: bold; width: 50vw"
+                        class="designation-class"
+                >Projektstunden</label
+                ><input
+                      type="text"
+                      style="width: 50vw"
+                      class="item-input-class"
+                      value=""
+              />
+              </div>
+              <div style="display: flex; flex-direction: row">
+                <label
+                        style="font-weight: bold; width: 50vw"
+                        class="designation-class"
+                >Tätigkeit</label
+                ><input
+                      type="text"
+                      style="width: 50vw"
+                      class="item-input-class"
+              />
+              </div>
+              <div style="display: flex; flex-direction: row">
+                <label
+                        style="font-weight: bold; width: 50vw"
+                        class="designation-class"
+                >Beschreibung</label
+                ><input
+                      type="text"
+                      style="width: 50vw"
+                      class="item-input-class"
+                      value="[refItem]"
+              />
+              </div>
+              <div style="display: flex; flex-direction: row">
+                <label
+                        style="font-weight: bold; width: 50vw"
+                        class="designation-class"
+                >Menge</label
+                ><input
+                      type="text"
+                      style="width: 50vw"
+                      class="item-input-class"
+                      value="[refItem]"
+              />
+              </div>
+              <div style="display: flex; flex-direction: row">
+                <label
+                        style="font-weight: bold; width: 50vw"
+                        class="designation-class"
+                >Preis pro Stunde</label
+                ><input
+                      type="text"
+                      style="width: 50vw"
+                      class="item-input-class"
+                      value="[refItem]"
+              />
+              </div>
+            </div>
+            <button onclick="" style="margin: 5px">+</button>
+          </div>
+          <div>
+            <h3
+                    style="font-weight: bold; width: 50vw"
+                    class="designation-class"
+            >
+              Fremdkosten
+            </h3>
+            <div
+                    style="border: 1px solid #ccc; padding: 5px"
+                    class="item-class"
+            >
+              <div style="display: flex; flex-direction: row">
+                <label
+                        style="font-weight: bold; width: 50vw"
+                        class="designation-class"
+                >Fremdkosten</label
+                ><input
+                      type="text"
+                      style="width: 50vw"
+                      class="item-input-class"
+                      value=""
+              />
+              </div>
+              <div style="display: flex; flex-direction: row">
+                <label
+                        style="font-weight: bold; width: 50vw"
+                        class="designation-class"
+                >Beschreibung</label
+                ><input
+                      type="text"
+                      style="width: 50vw"
+                      class="item-input-class"
+                      value="[refItem]"
+              />
+              </div>
+              <div style="display: flex; flex-direction: row">
+                <label
+                        style="font-weight: bold; width: 50vw"
+                        class="designation-class"
+                >Menge</label
+                ><input
+                      type="text"
+                      style="width: 50vw"
+                      class="item-input-class"
+                      value="[refItem]"
+              />
+              </div>
+              <div style="display: flex; flex-direction: row">
+                <label
+                        style="font-weight: bold; width: 50vw"
+                        class="designation-class"
+                >Einheit</label
+                ><input
+                      type="text"
+                      style="width: 50vw"
+                      class="item-input-class"
+                      value="[refItem]"
+              />
+              </div>
+              <div style="display: flex; flex-direction: row">
+                <label
+                        style="font-weight: bold; width: 50vw"
+                        class="designation-class"
+                >Preis</label
+                ><input
+                      type="text"
+                      style="width: 50vw"
+                      class="item-input-class"
+                      value="[refItem]"
+              />
+              </div>
+            </div>
+            <button onclick="" style="margin: 5px">+</button>
+          </div>
+          <div></div>
+        </div>
+      </div>
+      <undefined></undefined>
+    </div>
+  </div>
+  <hr />
+  <input type="submit" value="Speichern" />
+</form>
+</body>
+</html>

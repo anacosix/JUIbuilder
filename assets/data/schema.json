@@ -1,0 +1,1035 @@
+{
+  "$comment": "Schema for the referenced elements. Used for Events, Roles and Regulations.",
+  "$schema": "https://json-schema.org/draft/2020-12/schema#",
+  "properties": {
+    "authorization": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "role",
+          "activity"
+        ],
+        "properties": {
+          "role": {
+            "type": "string",
+            "enum": ["Projektverantwortlicher", "Admin", "Mitarbeiter"]
+          },
+          "activity": {
+            "type": "string",
+            "enum": ["edit", "view"]
+          }
+        },
+        "examples": [
+          {
+            "role": "Projektverantwortlicher",
+            "activity": "edit"
+          }
+        ]
+      }
+    },
+    "identity": {
+      "$ref": "#/$defs/defIdentity"
+    },
+    "input": {
+      "type": "object",
+      "default": {},
+      "title": "The input Schema",
+      "properties": {
+        "class": {
+          "$ref": "#/$defs/defClassOther"
+        }
+      }
+    },
+    "output": {
+      "type": "object",
+      "default": {},
+      "title": "The input Schema",
+      "required": [
+        "class"
+      ],
+      "properties": {
+        "class": {
+          "$ref": "#/$defs/defClassOutput"
+        }
+      }
+    },
+    "result": {
+      "result": {
+        "type": "object",
+        "required": [
+          "resultDef"
+        ],
+        "properties": {
+          "resultDef": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "template",
+                "service",
+                "transport"
+              ],
+              "properties": {
+                "template": {
+                  "type": "string",
+                  "examples": [
+                    "Rechnung"
+                  ]
+                },
+                "service": {
+                  "type": "string",
+                  "examples": [
+                    "pdf"
+                  ]
+                },
+                "transport": {
+                  "type": "object",
+                  "required": [
+                    "destinationItem",
+                    "type"
+                  ],
+                  "properties": {
+                    "destinationItem": {
+                      "type": "string"
+                    },
+                    "type": {
+                      "type": "string",
+                      "examples": [
+                        "email"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "state": {
+      "$ref": "#/$defs/defState"
+    },
+    "trigger": {
+      "$ref": "#/$defs/defTrigger"
+    },
+    "validity": {
+      "$ref": "#/$defs/defValidity"
+    }
+  },
+  "required": [
+    "identity",
+    "output"
+  ],
+  "additionalProperties": false,
+  "$defs": {
+    "defIdentity": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "title": "Name",
+          "type": "string",
+          "pattern": "^[a-z][a-zA-Z]*$"
+        },
+        "designation": {
+          "title": "Designation",
+          "type": "string"
+        },
+        "description": {
+          "title": "Description",
+          "type": "string"
+        },
+        "circle": {
+          "title": "Circle",
+          "type": "string",
+          "enum": [
+            "Asset",
+            "Purpose"
+          ]
+        },
+        "domain": {
+          "title": "Domain",
+          "type": "string",
+          "examples": [
+            "humanResources",
+            "customerRelationshipManagement"
+          ]
+        }
+      },
+      "required": [
+        "name",
+        "designation",
+        "circle",
+        "domain"
+      ]
+    },
+    "defClassOther": {
+      "title": "Schema for item",
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "oneOf": [
+            {
+              "title": "Class name",
+              "type": "string",
+              "pattern": "^[a-z][a-zA-Z]*$"
+            },
+            {
+              "title": "Class name",
+              "type": "string",
+              "pattern": "^[$][a-z][a-zA-Z]*$"
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "jsonPath": {
+                  "title": "JSON Path to be replaced by its result",
+                  "type": "string"
+                }
+              }
+            },
+            {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^[a-z][a-zA-Z]*$"
+              }
+            }
+          ]
+        },
+        "item": {
+          "title": "List of Items",
+          "description": "Defining new items to generate the class",
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/defItem"
+          }
+        },
+        "list": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/defList"
+          }
+        },
+        "entry": {
+          "title": "Document entries in the class",
+          "description": "Generate fixed document entries for this class",
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        }
+      },
+      "required": [
+        "name"
+      ]
+    },
+    "defClassOutput": {
+      "title": "Schema for item",
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "oneOf": [
+            {
+              "title": "Class name",
+              "type": "string",
+              "pattern": "^[a-z][a-zA-Z]*$"
+            },
+            {
+              "title": "Class name",
+              "type": "string",
+              "pattern": "^[$][a-z][a-zA-Z]*$"
+            }
+          ]
+        },
+        "designation": {
+          "title": "Designation",
+          "description": "Designation of class",
+          "type": "string"
+        },
+        "item": {
+          "title": "List of Items",
+          "description": "Defining new items to generate the class",
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/defItem"
+          }
+        },
+        "list": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/defList"
+          }
+        },
+        "display": {
+          "type": "array",
+          "description": "Display definitions for class",
+          "items": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "const": "list",
+                "default": "list"
+              },
+              "refItem": {
+                "type": "array"
+              }
+            }
+          }
+        },
+        "secondaryClass": {
+          "title": "Secondary class",
+          "description": "If more than one class, only one is the main transaction class. All others are set to secondary.",
+          "type": "boolean"
+        },
+        "copy": {
+          "title": "Copy input",
+          "description": "Copy values of items and lists from the same input class",
+          "type": "boolean"
+        },
+        "entry": {
+          "title": "Document entries in the class",
+          "description": "Generate fixed document entries for this class",
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        }
+      },
+      "required": [
+        "name"
+      ]
+    },
+    "defState": {
+      "additionalProperties": false,
+      "properties": {
+        "direction": {
+          "title": "Direction",
+          "type": "string",
+          "enum": [
+            "Asset",
+            "Purpose"
+          ]
+        },
+        "task": {
+          "title": "Task",
+          "type": "string",
+          "enum": [
+            "Agreement",
+            "Delivery",
+            "Compensation",
+            "Information"
+          ]
+        },
+        "step": {
+          "title": "Step",
+          "type": "string",
+          "enum": [
+            "Preparation",
+            "Execution"
+          ]
+        }
+      },
+      "required": [
+        "direction",
+        "task",
+        "step"
+      ]
+    },
+    "defTrigger": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "dueOn": {
+          "properties": {
+            "periodicity": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/defCron"
+              }
+            }
+          }
+        },
+        "startOn": {
+          "type": "array",
+          "items": {
+            "properties": {
+              "type": {
+                "type": "string"
+              }
+            },
+            "required": [
+              "type"
+            ],
+            "allOf": [
+              {
+                "if": {
+                  "properties": {
+                    "type": {
+                      "const": "Period"
+                    }
+                  },
+                  "required": [
+                    "type"
+                  ]
+                },
+                "then": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "periodicity": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/$defs/defCron"
+                      }
+                    },
+                    "type": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "periodicity",
+                    "type"
+                  ]
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "type": {
+                      "const": "Manual"
+                    }
+                  },
+                  "required": [
+                    "type"
+                  ]
+                },
+                "then": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "type": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "type"
+                  ]
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "type": {
+                      "const": "Service"
+                    }
+                  },
+                  "required": [
+                    "type"
+                  ]
+                },
+                "then": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "type": {
+                      "type": "string"
+                    },
+                    "refService": {
+                      "type": "array"
+                    }
+                  },
+                  "required": [
+                    "refService",
+                    "type"
+                  ]
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "type": {
+                      "const": "Event"
+                    }
+                  },
+                  "required": [
+                    "type"
+                  ]
+                },
+                "then": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "type": {
+                      "type": "string"
+                    },
+                    "event": {
+                      "oneOf": [
+                        {
+                          "title": "Class name",
+                          "type": "string",
+                          "pattern": "^[a-z][a-zA-Z]*$"
+                        },
+                        {
+                          "type": "object",
+                          "additionalProperties": false,
+                          "properties": {
+                            "jsonPath": {
+                              "title": "JSON Path to be replaced by its result",
+                              "type": "string"
+                            }
+                          }
+                        },
+                        {
+                          "type": "array",
+                          "items": {
+                            "type": "string",
+                            "pattern": "^[a-z][a-zA-Z]*$"
+                          }
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "class": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/defClassOther"
+          }
+        },
+        "condition": {
+          "$ref": "#/$defs/defCondition"
+        }
+      }
+    },
+    "defValidity": {
+      "additionalProperties": false,
+      "properties": {
+        "start": {
+          "title": "Start",
+          "type": "string",
+          "format": "date-time",
+          "examples": [
+            "2021-01-01T13:00:00+00:00"
+          ]
+        },
+        "end": {
+          "title": "End",
+          "type": "string",
+          "format": "date-time",
+          "examples": [
+            "2022-12-31T13:00:00+00:00"
+          ]
+        }
+      }
+    },
+    "defItem": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "title": "Item",
+          "type": "string",
+          "pattern": "^[a-z][a-zA-Z]*$"
+        },
+        "virtName": {
+          "title": "Name for virtual dataset in Input",
+          "type": "string",
+          "pattern": "^[a-z][a-zA-Z]*$"
+        },
+        "designation": {
+          "title": "Designation",
+          "type": "string"
+        },
+        "type": {
+          "title": "Type",
+          "type": "string",
+          "enum": [
+            "number",
+            "string",
+            "boolean",
+            "object",
+            "date",
+            "datetime"
+          ]
+        },
+        "refClass": {
+          "type": "string",
+          "title": "Referenced or inherited class",
+          "pattern": "^[a-z][.a-zA-Z]*$"
+        },
+        "properties": {
+          "$ref": "#/$defs/defItemProperties"
+        }
+      }
+    },
+    "defList": {
+      "title": "list/subdocument",
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "title": "List name",
+          "type": "string",
+          "pattern": "^[a-z][a-zA-Z]*$"
+        },
+        "designation": {
+          "title": "Designation",
+          "type": "string"
+        },
+        "type": {
+          "title": "Typ",
+          "type": "string",
+          "enum": [
+            "object",
+            "array"
+          ]
+        },
+        "item": {
+          "title": "items wihtin the list",
+          "description": "Defining new to generate the class",
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/defItem"
+          }
+        },
+        "list": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/defList"
+          }
+        }
+      }
+    },
+    "defItemProperties": {
+      "title": "Item properties",
+      "description": "Additional properties for items",
+      "additionalProperties": false,
+      "type": "object",
+      "properties": {
+        "format": {
+          "title": "Type",
+          "type": "string",
+          "enum": [
+            "time",
+            "textarea",
+            "email",
+            "tel",
+            "url"
+          ]
+        },
+        "hint": {
+          "title": "Pattern",
+          "type": "string"
+        },
+        "unique": {
+          "title": "Unique entry",
+          "type": "boolean",
+          "default": true
+        },
+        "required": {
+          "title": "Required",
+          "type": "boolean",
+          "default": true
+        },
+        "validation": {
+          "title": "Validation",
+          "additionalProperties": false,
+          "description": "Regular expression or servie for validation the input",
+          "type": "object",
+          "properties": {
+            "regEx": {
+              "additionalProperties": false,
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/defArgument"
+              }
+            },
+            "service": {
+              "title": "validate with service",
+              "type": "string"
+            },
+            "condition": {
+              "$ref": "#/$defs/defCondition"
+            }
+          }
+        },
+        "help": {
+          "title": "Value help",
+          "description": "Service for providing a value help",
+          "type": "string"
+        },
+        "enum": {
+          "title": "Enumeration",
+          "description": "List of fix possible values if not defined in help",
+          "type": "array"
+        },
+        "hidden": {
+          "title": "Hidden",
+          "description": "Item is hidden for the user",
+          "type": "boolean"
+        },
+        "readonly": {
+          "title": "Read only",
+          "description": "Item is not input ready, only shows data",
+          "type": "boolean"
+        },
+        "unit": {
+          "$ref": "#/$defs/defArgument"
+        },
+        "currency": {
+          "$ref": "#/$defs/defArgument"
+        },
+        "decimals": {
+          "title": "Decimals",
+          "type": "integer"
+        },
+        "value": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/defArgument"
+            },
+            {
+              "type": "object",
+              "additionalProperties": false,
+              "properties": {
+                "concatenation": {
+                  "title": "List of arguments",
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/defArgument"
+                  }
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "defPeriodicity": {
+      "title": "Periodicity",
+      "description": "Start timepoint and repetition.",
+      "additionalProperties": false,
+      "properties": {
+        "firstDate": {
+          "title": "First date",
+          "type": "string",
+          "format": "date",
+          "examples": [
+            "2021-07-01"
+          ]
+        },
+        "firstTime": {
+          "title": "First time",
+          "type": "string",
+          "format": "time",
+          "examples": [
+            "09:00:00+01:00"
+          ]
+        },
+        "repetition": {
+          "title": "Type of period",
+          "type": "string",
+          "enum": [
+            "year",
+            "quarter",
+            "semester",
+            "month",
+            "week",
+            "day",
+            "hour"
+          ]
+        },
+        "term": {
+          "title": "Repetition term",
+          "type": "integer",
+          "default": 1
+        },
+        "saturday": {
+          "title": "Valid on saturdays",
+          "type": "boolean",
+          "default": true
+        },
+        "sunday": {
+          "title": "Valid on sunays and holidays",
+          "type": "boolean",
+          "default": false
+        }
+      },
+      "required": [
+        "firstDate",
+        "firstTime",
+        "repetition",
+        "term"
+      ]
+    },
+    "defCron": {
+      "title": "Cron Expression",
+      "properties": {
+        "minutes": {
+          "title": "Minutes",
+          "type": [
+            "number",
+            "string"
+          ],
+          "default": 0,
+          "maximum": 59
+        },
+        "hour": {
+          "title": "Hour",
+          "type": [
+            "number",
+            "string"
+          ],
+          "default": 0,
+          "maximum": 23
+        },
+        "dayOfMonth": {
+          "title": "Day of Month",
+          "type": [
+            "number",
+            "string"
+          ],
+          "default": "*",
+          "maximum": 31
+        },
+        "month": {
+          "title": "Month",
+          "type": [
+            "number",
+            "string"
+          ],
+          "default": "*",
+          "maximum": 12
+        },
+        "dayOfWeek": {
+          "title": "Day of Week",
+          "type": [
+            "number",
+            "string"
+          ],
+          "default": "*",
+          "maximum": 6
+        }
+      }
+    },
+    "defApproval": {
+      "title": "List of approvals",
+      "description": "Conditions for the approval and role where to request tha approval",
+      "properties": {
+        "condition": {
+          "$ref": "#/$defs/defCondition"
+        },
+        "refRole": {
+          "title": "Role",
+          "type": "array"
+        }
+      },
+      "required": [
+        "refRole"
+      ]
+    },
+    "defCondition": {
+      "additionalProperties": false,
+      "properties": {
+        "logical": {
+          "title": "Logical Query Operator",
+          "type": "string",
+          "enum": [
+            "$and",
+            "$or",
+            "$nor"
+          ]
+        },
+        "expression": {
+          "title": "List of expressions",
+          "type": "array",
+          "items": {
+            "properties": {
+              "refItem": {
+                "title": "Class / Subclass / Item",
+                "type": "string"
+              },
+              "comparison": {
+                "title": "Comparison Query Operator",
+                "type": "string",
+                "enum": [
+                  "$eq",
+                  "$gt",
+                  "$gte",
+                  "$lt",
+                  "$lte",
+                  "$ne"
+                ]
+              },
+              "argument": {
+                "$ref": "#/$defs/defArgument"
+              }
+            }
+          },
+          "required": [
+            "refItem",
+            "comparison",
+            "argument"
+          ]
+        }
+      },
+      "required": [
+        "logical",
+        "expression"
+      ]
+    },
+    "defFormula": {
+      "additionalProperties": false,
+      "properties": {
+        "operator": {
+          "title": "Aggregation Pipeline Operator",
+          "type": "string",
+          "enum": [
+            "$multiply",
+            "$divide",
+            "$add",
+            "$subtract"
+          ]
+        },
+        "argument": {
+          "title": "List of arguments",
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/defArgument"
+          }
+        }
+      },
+      "required": [
+        "operator",
+        "argument"
+      ]
+    },
+    "defEvaluation": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "refItem": {
+          "title": "Class / Subclass / Item",
+          "type": "string"
+        },
+        "condition": {
+          "$ref": "#/$defs/defCondition"
+        },
+        "evaluation": {
+          "$ref": "#/$defs/defEvaluation"
+        }
+      },
+      "required": [
+        "refItem"
+      ]
+    },
+    "defArgument": {
+      "additionalProperties": false,
+      "type": "object",
+      "properties": {
+        "constant": {
+          "type": [
+            "string",
+            "number"
+          ],
+          "title": "Constant"
+        },
+        "refItem": {
+          "title": "Value of referencedItem",
+          "type": "string"
+        },
+        "formula": {
+          "$ref": "#/$defs/defFormula"
+        },
+        "variable": {
+          "title": "System variable",
+          "type": "string"
+        },
+        "userInput": {
+          "$ref": "#/$defs/defUserInput"
+        },
+        "refItemNext": {
+          "type": "object",
+          "properties": {
+            "refItem": {
+              "title": "Value of referenced Item",
+              "type": "string"
+            },
+            "offset": {
+              "title": "applied offset to extract the numeric value, (offset, length)",
+              "type": "string"
+            },
+            "type": {
+              "title": "extract max value versus current document",
+              "type": "string",
+              "enum": [
+                "line",
+                "table"
+              ]
+            },
+            "step": {
+              "title": "applied step",
+              "type": "number",
+              "default": 1
+            },
+            "base": {
+              "title": "Base value, eg start number",
+              "type": "number"
+            }
+          }
+        },
+        "lookup": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "refItem": {
+              "title": "Extracted item",
+              "type": "string"
+            },
+            "selection": {
+              "$ref": "#/$defs/defCondition"
+            }
+          }
+        }
+      }
+    },
+    "defUserInput": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "title": "User Input Typ",
+          "type": "string",
+          "enum": [
+            "Single",
+            "Interval"
+          ]
+        },
+        "multiple": {
+          "title": "Multiple entries",
+          "type": "boolean",
+          "default": false
+        },
+        "required": {
+          "title": "Required",
+          "type": "boolean",
+          "default": true
+        },
+        "defaultLow": {
+          "title": "Default for single value or start of interval",
+          "type": [
+            "string",
+            "number"
+          ]
+        },
+        "defaultHigh": {
+          "title": "Default for end of of interval",
+          "type": [
+            "string",
+            "number"
+          ]
+        }
+      }
+    }
+  }
+}
