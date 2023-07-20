@@ -39,9 +39,12 @@ const converter = new JUIBuilder(elementConfigMap);
 * for properties depending on their toplevel object, use 'subLevel'
 */ properties marked as 'label' will have an input element added to them
 const jsonSchema = {
-  id: 'p',
+  id: {
+    tag: 'p'
+  },
   batters: { 
-    tag: 'div'
+    tag: 'div',
+    style: 'padding: 10px;',
     subLevel: {
         batter: 'list'
     }
