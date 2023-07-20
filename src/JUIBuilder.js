@@ -127,8 +127,8 @@ class JUIBuilder {
     }
 
     // Return html generated from provided JSON data
-    processEventData(inputJsonData = null, jsonData, jsonSchema = null) {
-        if (!this.validateSchema(jsonData, jsonSchema) || !this.validateSchema(inputJsonData, jsonSchema)) {
+    processEventData(jsonData, jsonSchema = null) {
+        if (!this.validateSchema(jsonData, jsonSchema) || !this.validateSchema(jsonSchema)) {
             return '';
         }
 

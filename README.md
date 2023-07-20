@@ -15,68 +15,56 @@ The JUIBuilder is a JavaScript framework that provides a simple and customizable
 ## Usage
 Here is an example on how to use this framework: 
 ```
-// (Optional) Define the element configuration map by matching the JSON properties of your data to HTML elements
+// (Optional) Define the element configuration map by matching the JSON properties of your data to HTML element references.
+// The name of the element needs to match the name of the JSON-property. Per element you can define tag (HTML reference), style (CSS styling) and sublevel.
+// Use sublevel if the JSON property has nested objects, which you want to style specifically. In the sublevel you can define tag and style.
 const elementConfigMap = {
-  identity: {
-    tag: 'div',
-    subLevel: {
-      designation: 'h2',
-      description: 'p'
-    }
-  },
-  output: 'div',
-  list: 'div',
-  item: 'div',
-  designation: 'label',
-  class: ''
+    age: {
+        tag: 'h3'
+        subLevel: {
+            name: {
+                tag: 'p'
+            }
+        }
+    },
+    lastName: {
+        tag: 'p',
+        style: 'padding: 10px;'
+    },
 };
 
 // Create an instance of the JUIBuilder class (optionally with own elementConfigMap)
 const converter = new JUIBuilder(elementConfigMap);
 
 /* (Optional) Define your JSON schema
-* Use HTML element references to define the appearence 
-* for properties depending on their toplevel object, use 'subLevel'
-*/ properties marked as 'label' will have an input element added to them
-const jsonSchema = {
-  id: {
-    tag: 'p'
-  },
-  batters: { 
-    tag: 'div',
-    style: 'padding: 10px;',
-    subLevel: {
-        batter: 'list'
+*/ Define your own JSON schema for the JSON data you want to convert to HTML. The JSON schema needs to follow the 2020-12 schema standard. 
+const jsonSchemaOne = {
+    "$id": "https://example.com/person.schema.json",
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "title": "Person",
+    "type": "object",
+    "properties": {
+        "firstName": {
+            "type": "string",
+            "description": "The person's first name."
+        },
+        "lastName": {
+            "type": "string",
+            "description": "The person's last name."
+        },
+        "age": {
+            "description": "Age in years which must be equal to or greater than zero.",
+            "type": "integer",
+            "minimum": 0
+        }
     }
-  }
 };
 
-// Define your jsonData
-const jsonData = {
-	"id": "0001",
-	"type": "donut",
-	"name": "Cake",
-	"ppu": 0.55,
-	"batters":
-		{
-			"batter":
-				[
-					{ "id": "1001", "type": "Regular" },
-					{ "id": "1002", "type": "Chocolate" },
-					{ "id": "1003", "type": "Blueberry" },
-					{ "id": "1004", "type": "Devil's Food" }
-				]
-		},
-	"topping":
-		[
-			{ "id": "5001", "type": "None" },
-			{ "id": "5002", "type": "Glazed" },
-			{ "id": "5005", "type": "Sugar" },
-			{ "id": "5007", "type": "Powdered Sugar" },
-			{ "id": "5006", "type": "Chocolate with Sprinkles" },
-			{ "id": "5003", "type": "Chocolate" },
-			{ "id": "5004", "type": "Maple" }
-		]
+// Define your JSON data which you want to convert to 
+const example = {
+    "firstName": "John",
+    "lastName": "Doe",
+    "age": 21
 };
 
 // Convert the JSON data to HTML (optional with own jsonSchema)

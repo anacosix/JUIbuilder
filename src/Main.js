@@ -823,7 +823,7 @@ const converter = new JSONToHTMLConverter();
 console.log(htmlMarkup);
 console.log('------------------------------------------------------');*/
 
-let htmlMarkup = converter.processEventData(null, exampleThree);
+let htmlMarkup = converter.processEventData(exampleThree);
 console.log(htmlMarkup);
 //htmlMarkup = converter.processEventData(exampleTwo, jsonSchema);
 //console.log(htmlMarkup);
