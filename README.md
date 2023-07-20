@@ -33,7 +33,7 @@ const elementConfigMap = {
     },
 };
 
-// Create an instance of the JUIBuilder class (optionally with own elementConfigMap)
+// Create an instance of the JUIBuilder class (optionally with own elementConfigMap else leave parameters empty)
 const converter = new JUIBuilder(elementConfigMap);
 
 /* (Optional) Define your JSON schema
@@ -60,14 +60,14 @@ const jsonSchemaOne = {
     }
 };
 
-// Define your JSON data which you want to convert to 
+// Define your JSON data which you want to convert to HTML
 const example = {
     "firstName": "John",
     "lastName": "Doe",
     "age": 21
 };
 
-// Convert the JSON data to HTML (optional with own jsonSchema)
+// Convert the JSON data to HTML (optional with own jsonSchema else leave parameters empty)
 const html = converter.processEventData(jsonData, jsonSchema);
 
 // Output the generated HTML
