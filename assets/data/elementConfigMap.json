@@ -1,0 +1,45 @@
+{
+            "identity": {
+                "tag": "div",
+                "style": "padding: 10px; padding-bottom: 0;",
+                "class": "identity-class",
+                "subLevel": {
+                    "designation": {
+                        "tag": "h2"
+                    },
+                    "description": {
+                        "tag": "p",
+                        "style": "font-size: 14px;"
+                    }
+                }
+            },
+            "output": {
+                "tag": "div",
+                "style": "font-weight: bold; padding: 10px;",
+                "class": "output-class"
+            },
+            "class": {
+                "subLevel": {
+                    "designation": {
+                        "tag": "h3"
+                    }
+                }
+            },
+            "list": {
+                "tag": "div",
+                "class": "list-class",
+                "subLevel": {
+                    "item": {
+                        "tag": "h4"
+                    }
+                }
+            },
+            "item": {
+                "tag": "div",
+                "style": "border: 1px solid #ccc;"
+            },
+            "designation": {
+                "tag": "label",
+                "style": "font-weight: bold; width: 50vw;"
+            }
+        }

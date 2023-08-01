@@ -1,0 +1,62 @@
+<form id="htmlForm">
+    <div style="padding: 10px; padding-bottom: 0;" class="identity-class">
+        <div>
+            <h2>Projekt bearbeiten</h2>
+            <p>Hier erstellst du Projekte, die ohne einen Umweg &#xFC;ber „Angebot erstellen“ direkt freigegeben werden k&#xF6;nnen.
+                Er&#xF6;ffne Projekte, die mit Kunden schon umfassend m&#xFC;ndlich abgesprochen wurden oder bei denen du auf eine Auftragsbest&#xE4;tigung verzichten m&#xF6;chtest. Die Projekte k&#xF6;nnen in der Folge direkt zur Bearbeitung freigegeben werden.</p>
+        </div>
+    </div>
+    <div style="font-weight: bold; padding: 10px;" class="output-class">
+        <div style="" class="class-class">
+            <div>
+                <h3 style="font-weight: bold; width: 50vw;" class="designation-class">Projekt</h3>
+                <div style="border: 1px solid #ccc;" class="item-class">
+                    <div style="display: flex; flex-direction: row;"><label style="font-weight: bold; width: 50vw;" class="designation-class">Projekt</label><input type="text" style="width: 50vw;" class="item-input-class" required="" value="PR 2023[refItemNext: projectId]"></div>
+                    <div style="display: flex; flex-direction: row;"><label style="font-weight: bold; width: 50vw;" class="designation-class">Angebot</label><input type="text" style="width: 50vw;" class="item-input-class"></div>
+                    <div style="display: flex; flex-direction: row;"><label style="font-weight: bold; width: 50vw;" class="designation-class">Bezeichnung</label><input type="text" style="width: 50vw;" class="item-input-class"></div>
+                    <div style="display: flex; flex-direction: row;"><label style="font-weight: bold; width: 50vw;" class="designation-class">Beschreibung</label><input type="text" style="width: 50vw;" class="item-input-class" value=""></div>
+                    <div style="display: flex; flex-direction: row;"><label style="font-weight: bold; width: 50vw;" class="designation-class">Start</label><input type="text" style="width: 50vw;" class="item-input-class"></div>
+                    <div style="display: flex; flex-direction: row;"><label style="font-weight: bold; width: 50vw;" class="designation-class">Ende</label><input type="text" style="width: 50vw;" class="item-input-class"></div>
+                </div>
+                <div style="" class="list-class">
+                    <div id="list-0">
+                        <h3 style="font-weight: bold; width: 50vw;" class="designation-class">Projektposition</h3>
+                        <div style="border: 1px solid #ccc;" class="item-class">
+                            <div style="display: flex; flex-direction: row;"><label style="font-weight: bold; width: 50vw;" class="designation-class">T&#xE4;tigkeit</label><input type="text" style="width: 50vw;" class="item-input-class" required="" value=""></div>
+                            <div style="display: flex; flex-direction: row;"><label style="font-weight: bold; width: 50vw;" class="designation-class">Beschreibung</label><input type="text" style="width: 50vw;" class="item-input-class" value="[refItem: activity.description]"></div>
+                            <div style="display: flex; flex-direction: row;"><label style="font-weight: bold; width: 50vw;" class="designation-class">Menge</label><input type="text" style="width: 50vw;" class="item-input-class" step="0.1" value="[refItem: unit]"></div>
+                            <div style="display: flex; flex-direction: row;"><label style="font-weight: bold; width: 50vw;" class="designation-class">Einheit</label><input type="text" style="width: 50vw;" class="item-input-class"></div>
+                            <div style="display: flex; flex-direction: row;"><label style="font-weight: bold; width: 50vw;" class="designation-class">Preis</label><input type="text" style="width: 50vw;" class="item-input-class" step="0.01" value="[refItem: activity.price]"></div>
+                        </div>
+                    </div><button id="add-item-0" style="margin-top: 10px;"> + </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script class="script-class">
+        function extractNumFromString(value) {
+            return value.replace(/\D/g, '');
+        }
+
+        function addItem(event) {
+            debugger;
+            event.preventDefault();
+
+            // Get first div of target list, clone it and append it to the list
+            const targetList = document.getElementById("list-" + extractNumFromString(event.currentTarget.id));
+            const firstDiv = targetList.querySelector("div");
+            const newItem = firstDiv.cloneNode(true);
+
+            const inputElements = newItem.querySelectorAll("input");
+            inputElements.forEach((input) => {
+                input.value = '';
+            });
+
+            targetList.appendChild(newItem);
+        }
+
+        document.getElementById("add-item-0").addEventListener("click", addItem);
+    </script>
+    <hr>
+    <input id="submitFormInput" type="submit" value="Speichern">
+</form>
