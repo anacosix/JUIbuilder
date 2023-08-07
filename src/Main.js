@@ -14,7 +14,7 @@ const jsonDataTestCase6 = require('../assets/testcases/jsonDataTestCase6.json');
 
 const converter = new JUIBuilder();
 
-let htmlMarkup = converter.processEventData(jsonDataTestCase4);
+let htmlMarkup = converter.processEventData(jsonDataTestCase6);
 
 // For presentation purposes
 try {
