@@ -1,6 +1,6 @@
 {
-  "name": "juibuilder",
-  "version": "1.0.0",
+  "name": "jui-builder",
+  "version": "1.0.2",
   "dependencies": {
     "@appland/appmap-agent-js": "^14.0.0",
     "ajv": "^8.12.0",
@@ -15,5 +15,20 @@
   "devDependencies": {
     "json-loader": "^0.5.7",
     "webpack": "^5.88.1"
-  }
+  },
+  "description": "The JUIBuilder is a JavaScript framework that provides a simple and customizable way to generate dynamic HTML content based on structured JSON data.",
+  "main": "src/JUIBuilder.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/anacosix/JUIbuilder.git"
+  },
+  "bugs": {
+    "url": "https://github.com/anacosix/JUIbuilder/issues"
+  },
+  "homepage": "https://github.com/anacosix/JUIbuilder#readme"
 }
