@@ -48,19 +48,20 @@ class DataProcessor {
         let content = this.processValue(value, key);
 
         // Check if a sublevel is defined for the current key in the elementConfigMap
-        if (elementConfig.subLevel) {
+        if (elementConfig.subLevel && key !== 'list') {
             // Process sublevel
-            content += this.processSublevelObject(elementConfig, value);
+            content += this.processSublevelObject(elementConfig, value, objectData);
         }
 
         let elementHTML = (keys[currentIndex + 2] !== 'circle') ? `<${checkedTag} style="${style}" class="${elementConfig.hasOwnProperty('class') ? elementConfig.class.valueOf() : key + '-class'}">${content}</${checkedTag}>` : '';
 
         if (checkedTag === 'label' && keys[currentIndex + 2] !== 'circle' && keys[currentIndex + 1] !== 'display' && keys[currentIndex + 2] !== 'item') {
-            elementHTML += this.processInput(objectData['properties']);
+            elementHTML += this.processInput(objectData['properties'], objectData['type']);
         }
 
         return elementHTML;
     }
+
 
     // Process value of JSON object or array
     static processValue(value, key) {
@@ -98,23 +99,38 @@ class DataProcessor {
     }
 
     // Process sublevel object and generate HTML
-    static processSublevelObject(elementConfig, value) {
+    static processSublevelObject(elementConfig, value, objectData) {
         const {tag, subLevel} = elementConfig;
         let subLevelHTML = '';
 
         // Generate sub-level elements
-        if (typeof value === 'object') {
+        if(Array.isArray(value)) {
+            for(let i = 0;i < value.length; i++) {
+                subLevelHTML += this.processSublevelObject(elementConfig, value[i], objectData);
+            }
+        } else if (typeof value === 'object') {
             for (const subKey in subLevel) {
                 if (subLevel.hasOwnProperty(subKey)) {
                     if (value.hasOwnProperty(subKey)) {
                         const subValue = value[subKey];
                         const subTag = subLevel[subKey].tag;
+                        const subStyle = subLevel[subKey].style ? `style="${subLevel[subKey].style}"` : '';
                         const subContent = this.processValue(subValue);
-                        const subElementHTML = `<${subTag}>${subContent}</${subTag}>`;
+                        let subElementHTML = `<${subTag} ${subStyle}>${subContent}</${subTag}>`;
+                        if(subTag === 'label') {
+                            subElementHTML += this.processInput(objectData['properties'], objectData['type']);
+                        }
 
                         subLevelHTML += subElementHTML;
                     }
                 }
+            }
+        } else if (typeof value === 'string' || typeof value === 'number') {
+            const subTag = subLevel.items.tag ? subLevel.items.tag : 'div';
+            const subStyle = subLevel.items.style ? `style="${subLevel.items.style}"` : '';
+            subLevelHTML += `<${subTag} ${subStyle}>${value}</${subTag}>`;
+            if(subTag === 'label') {
+                subLevelHTML += this.processInput(objectData['properties'], objectData['type']);
             }
         }
 
@@ -122,8 +138,9 @@ class DataProcessor {
     }
 
     // Process input elements
-    static processInput(properties) {
-        return properties ? this.processItemProperties(properties) : `<input type="text" style="width: 50vw;" class="item-input-class"/>`;
+    static processInput(properties, type) {
+        let inputType = type === 'string' || type === undefined ? 'text' : type;
+        return properties ? this.processItemProperties(properties) : `<input type="${inputType}" style="width: 50vw;" class="item-input-class"/>`;
     }
 
     // Process item properties and generate input elements for labels

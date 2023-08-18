@@ -58,11 +58,11 @@ class HtmlUtils {
         const tempMarkup = document.createElement('div');
         tempMarkup.innerHTML = htmlMarkup;
 
-        // remove empty divs and divs with value undefined
-        const divElements = tempMarkup.querySelectorAll('div');
-        divElements.forEach((divElement) => {
-            if (divElement.textContent.trim() === '' || divElement.textContent.trim().toLowerCase() === 'undefined') {
-                divElement.remove();
+        // remove empty elements or elements with value undefined
+        const emptyElements = tempMarkup.querySelectorAll(':not(input)');
+        emptyElements.forEach((emptyElement) => {
+            if (emptyElement.textContent.trim() === '' || emptyElement.textContent.trim().toLowerCase() === 'undefined') {
+                emptyElement.remove();
             }
         });
 

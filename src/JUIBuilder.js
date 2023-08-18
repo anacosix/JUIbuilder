@@ -30,11 +30,17 @@ class JUIBuilder {
             return '';
         }
 
+        const processedObjectContent = this.processObject(jsonData, this.elementConfigMap);
+
+        if (processedObjectContent.trim() === '') {
+            console.error("Your elementConfigMap does not have any keys corresponding to your data.");
+        }
+
         const processedHtml = `<!DOCTYPE html>
                                 <html lang="de">
                                   <body>
                                     <form id="htmlForm">
-                                        ${this.processObject(jsonData, this.elementConfigMap)}
+                                        ${processedObjectContent}
                                         ${DataProcessor.listCount !== 0 ? this.addButtonEventListener() : ''}
                                       <hr>
                                       <input id="submitFormInput" type="submit" value="Speichern">
